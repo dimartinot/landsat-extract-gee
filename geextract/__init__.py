@@ -35,7 +35,7 @@ BANDS_TO_COLORS['LE7'] = BANDS_TO_COLORS['LT4']
 
 
 def get_date(filename):
-    """Retriev date information from typical Landsat filenames
+    """Retrieves date information from typical Landsat filenames
 
     Args:
         filename (str): Landsat file name
@@ -158,8 +158,8 @@ def ts_extract(sensor, start, tiers = ['T1', 'T2'], lon = None, lat = None,
         # Define function to map over imageCollection to perform spatial aggregation 
         def _reduce_region(image):
             """Spatial aggregation function for a single image and a polygon feature"""
-            stat_dict = image.reduceRegion(fun, geometry, 30);
-            # FEature needs to be rebuilt because the backend doesn't accept to map
+            stat_dict = image.reduceRegion(fun, geometry, 30)
+            # Feature needs to be rebuilt because the backend doesn't accept to map
             # functions that return dictionaries
             return ee.Feature(None, stat_dict)
         fc = landsat.filterBounds(geometry).map(_reduce_region).getInfo()
@@ -169,7 +169,7 @@ def ts_extract(sensor, start, tiers = ['T1', 'T2'], lon = None, lat = None,
         geometry = ee.Geometry.Point(lon, lat)
         l = landsat.filterBounds(geometry).getRegion(geometry, 30).getInfo()
         out = dictify(l)
-        # pop longitude and lattitude keys from dict collection so that band aliases can
+        # pop longitude and latitude keys from dict collection so that band aliases can
         # be replaced by their color names
         [d.pop('longitude', None) for d in out]
         [d.pop('latitude', None) for d in out]
